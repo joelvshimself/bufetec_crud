@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Usuarios</title>
+    <link rel="stylesheet" href="./public/styles.css">
+</head>
+<body>
+    <h1>Lista de Usuarios</h1>
+    <table id="usuarios-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Permisos</th>
+                <th>Teléfono</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los datos se cargarán aquí dinámicamente -->
+        </tbody>
+    </table>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/usuarios')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.querySelector('#usuarios-table tbody');
+                    data.forEach(usuario => {
+                        const tr = document.createElement('tr');
+
+                        tr.innerHTML = `
+                            <td>${usuario.Usuario_id}</td>
+                            <td>${usuario.Nombre}</td>
+                            <td>${usuario.Apellido}</td>
+                            <td>${usuario.Correo}</td>
+                            <td>${usuario.Permisos}</td>
+                            <td>${usuario.Telefono}</td>
+                            <td>${usuario.Edad}</td>
+                        `;
+
+                        tbody.appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener los datos:', error);
+                });
+        });
+    </script>
+
+</body>
+</html>
