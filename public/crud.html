@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Usuarios</title>
+    <!-- Estilos CSS incrustados -->
+    <link href="./styles.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Lista de Usuarios</h1>
+    <table id="usuarios-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Permisos</th>
+                <th>Teléfono</th>
+                <th>Edad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los datos se cargarán aquí dinámicamente -->
+        </tbody>
+    </table>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/usuarios')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.querySelector('#usuarios-table tbody');
+                    data.forEach(usuario => {
+                        const tr = document.createElement('tr');
+
+                        tr.innerHTML = `
+                            <td>${usuario.Usuario_id}</td>
+                            <td>${usuario.Nombre}</td>
+                            <td>${usuario.Apellido}</td>
+                            <td>${usuario.Correo}</td>
+                            <td>${usuario.Permisos}</td>
+                            <td>${usuario.Telefono}</td>
+                            <td>${usuario.Edad}</td>
+                            <td>
+                                <button onclick="modificarPermiso(${usuario.Usuario_id})">Modificar Permiso</button>
+                                <button onclick="borrarUsuario(${usuario.Usuario_id})">Borrar</button>
+                            </td>
+                        `;
+
+                        tbody.appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener los datos:', error);
+                });
+        });
+
+        // Función para modificar permisos
+        function modificarPermiso(userId) {
+            const nuevoPermiso = prompt('Ingrese el nuevo permiso:');
+            if (nuevoPermiso) {
+                fetch(`/api/usuarios/${userId}/modificar-permiso`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ permiso: nuevoPermiso })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Permiso actualizado exitosamente');
+                    location.reload(); // Recargar la página para ver los cambios
+                })
+                .catch(error => {
+                    console.error('Error al modificar el permiso:', error);
+                });
+            }
+        }
+
+        // Función para borrar usuario
+        function borrarUsuario(userId) {
+            if (confirm('¿Estás seguro de que deseas borrar este usuario?')) {
+                fetch(`/api/usuarios/${userId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Usuario borrado exitosamente');
+                    location.reload(); // Recargar la página para ver los cambios
+                })
+                .catch(error => {
+                    console.error('Error al borrar el usuario:', error);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,27 +1,86 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+button {
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: #fff;
+    border-radius: 3px;
 }
 
-h1 {
+button:hover {
+    background-color: #0056b3;
+}
+
+/* General */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(0deg, #0062FF,#25ccff);
+    color: #fff;
+}
+
+
+
+
+/* Contenedor de partículas */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Contenido principal */
+.content {
+    position: absolute;
+    z-index: 2;
     text-align: center;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+/* Título */
+h1 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+/* Subtítulo */
+h2 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+/* Botón de llamada a la acción */
+.cta-button {
+    display: inline-block;
     margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #9b657100;
+    color: #fff;
+    border: 2px solid #ff416c;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 9px;
+    transition: background-color 0.3s ease;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
+.division{
+    display: flex; /* Usar flexbox para alinear elementos en fila */
+    justify-content: space-between; /* Espacio uniforme entre elementos */
+    align-items: center; /* Alinear elementos al centro de la fila verticalmente */
+    gap: 20px; /* Espacio entre elementos (opcional) */
+    padding: 10px; /* Espaciado interno (opcional) */
 }
 
-th {
-    background-color: #f2f2f2;
-}
+.cta-button:hover {
+    background-color: #a7a7a791;
 
-tr:hover {
-    background-color: #a62424;
 }
