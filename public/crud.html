@@ -5,8 +5,8 @@
     <title>Lista de Usuarios</title>
     <!-- Estilos CSS incrustados -->
     <link href="./styles.css" rel="stylesheet">
-    <!-- inclye el script.js-->
-    <script src="./script.js"></script>
+    <!-- Incluye el script.js-->
+    <script src="./script.js" defer></script>
 </head>
 <body>
     <!-- Modal HTML que se mostrará como pop-up -->
@@ -18,8 +18,8 @@
             <option value="2">2</option>
         </select>
         <br><br>
-        <button >Guardar</button>
-        <button >Cancelar</button>
+        <button id="guardar-btn">Guardar</button>
+        <button onclick="cerrarModal()">Cancelar</button>
     </div>
 
     <h1>Lista de Usuarios</h1>

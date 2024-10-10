@@ -1,6 +1,3 @@
-// script.js
-
-
 document.addEventListener('DOMContentLoaded', () => {
     fetch('/api/usuarios')
         .then(response => response.json())
@@ -33,45 +30,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let userIdGlobal = null;
 
-function modificarPermiso(UserId) {
-    // Guardamos el ID de usuario para usarlo más tarde
-    userIdGlobal = UserId;
-
-    // Mostrar el modal
+function modificarPermiso(userId) {
+    userIdGlobal = userId;
     document.getElementById('modal').style.display = 'block';
 }
 
 function cerrarModal() {
-    // Ocultar el modal
     document.getElementById('modal').style.display = 'none';
 }
 
-function enviarPermiso() {
+// Función para enviar un JSON específico
+async function renviarPermiso() {
     const permisoSeleccionado = document.getElementById('permiso').value;
-    const url = `/api/usuarios/${userIdGlobal}/permiso`;
+    const url = `https://bufetecapi.onrender.com/api/usuarios/${userIdGlobal}/permisos`; // Usamos la variable global userIdGlobal
 
-    // Datos que se enviarán en la petición
-    const data = {
-        permiso: parseInt(permisoSeleccionado)
+    const s = {
+        "Permisos": parseInt(permisoSeleccionado)  // Asegurarse de que sea un número
     };
 
-    // Realizar la petición PUT al servidor
-    fetch(url, {
-        method: 'PUT', 
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => {
+    try {
+        const response = await fetch(url, {
+            method: 'PUT', // Método PUT
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(s) // Cuerpo de la solicitud como JSON
+        });
+
         if (!response.ok) {
-            throw new Error('Error al modificar el permiso');
+            throw new Error(`Error en la solicitud: ${response.statusText}`);
         }
-        return response.json();
-    })
-    .then(updatedUser => {
-        console.log('Permiso modificado:', updatedUser);
-        alert('Permiso modificado exitosamente');
+
+        const data = await response.json();
+        console.log('Permiso actualizado correctamente:', data);
+        alert('Permiso actualizado correctamente');
 
         // Actualizar el permiso en la tabla
         const filas = document.querySelectorAll('#usuarios-table tbody tr');
@@ -82,37 +74,38 @@ function enviarPermiso() {
         });
 
         cerrarModal();
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Error:', error);
         alert('Hubo un problema al modificar el permiso');
         cerrarModal();
-    });
+    }
 }
 
-function borrarUsuario(userId) {
+// Asignar el evento al botón "Guardar" cuando se carga el DOM
+document.getElementById('guardar-btn').addEventListener('click', renviarPermiso);
+
+async function borrarUsuario(userId) {
     if (confirm('¿Estás seguro de que deseas borrar este usuario?')) {
-        fetch(`/api/usuarios/${userId}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
+        try {
+            const response = await fetch(`/api/usuarios/${userId}`, {
+                method: 'DELETE'
+            });
+
             if (!response.ok) {
                 throw new Error('Error al borrar el usuario');
             }
-            return response.json();
-        })
-        .then(data => {
+
+            const data = await response.json();
             alert('Usuario borrado exitosamente');
-            // Eliminar la fila correspondiente de la tabla
+
             const filas = document.querySelectorAll('#usuarios-table tbody tr');
             filas.forEach(fila => {
                 if (fila.children[0].textContent == userId) {
                     fila.remove();
                 }
             });
-        })
-        .catch(error => {
+        } catch (error) {
             console.error('Error al borrar el usuario:', error);
-        });
+        }
     }
 }
