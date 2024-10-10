@@ -84,3 +84,35 @@ h2 {
     background-color: #a7a7a791;
 
 }
+
+.column {
+    width: 45%;
+}
+.news-list {
+    border-right: 1px solid #ccc;
+    padding-right: 20px;
+}
+.news-item {
+    margin-bottom: 20px;
+}
+.news-item h3 {
+    margin: 0;
+}
+.upload-form {
+    padding-left: 20px;
+}
+.upload-form input, .upload-form textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+.upload-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
