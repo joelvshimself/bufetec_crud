@@ -5,27 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrador de Noticias</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="nscript.js" defer></script>
 </head>
 <body>
     <div class="column news-list">
         <h2>Noticias Publicadas</h2>
         <!-- Aquí se mostrarán las noticias publicadas desde la base de datos -->
-        <div class="news-item">
-            <h3>Título de la Noticia 1</h3>
-        </div>
-        <div class="news-item">
-            <h3>Título de la Noticia 2</h3>
+        <div id="lista">
+            
+
         </div>
         <!-- Más noticias -->
     </div>
     <div class="column upload-form">
         <h2>Subir Nueva Noticia</h2>
-        <form action="/ruta/a/tu/servidor" method="post" enctype="multipart/form-data">
-            <input type="text" name="titulo" placeholder="Título de la noticia" required>
-            <textarea name="descripcion" rows="5" placeholder="Descripción de la noticia" required></textarea>
-            <input type="file" name="imagen" accept="image/*" required>
-            <button type="submit">Subir Noticia</button>
-        </form>
+
+            <textarea id="titulo" rows="1" placeholder="Título de la noticia" required></textarea>
+            <textarea id="descripcion" rows="5" placeholder="Descripción de la noticia" required></textarea>
+            <textarea id="filelink" rows="2" placeholder="Link de la imagen" required></textarea>
+            <button id="uploadnoticia" type="submit">Subir Noticia</button>
     </div>
 </body>
 </html></html>
