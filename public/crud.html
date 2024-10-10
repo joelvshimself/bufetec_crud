@@ -5,8 +5,23 @@
     <title>Lista de Usuarios</title>
     <!-- Estilos CSS incrustados -->
     <link href="./styles.css" rel="stylesheet">
+    <!-- inclye el script.js-->
+    <script src="./script.js"></script>
 </head>
 <body>
+    <!-- Modal HTML que se mostrará como pop-up -->
+    <div id="modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); padding:20px; background-color:white; border: 1px solid black;">
+        <label for="permiso">Selecciona el nuevo permiso:</label>
+        <select id="permiso">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+        <br><br>
+        <button >Guardar</button>
+        <button >Cancelar</button>
+    </div>
+
     <h1>Lista de Usuarios</h1>
     <table id="usuarios-table">
         <thead>
@@ -25,75 +40,6 @@
             <!-- Los datos se cargarán aquí dinámicamente -->
         </tbody>
     </table>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('/api/usuarios')
-                .then(response => response.json())
-                .then(data => {
-                    const tbody = document.querySelector('#usuarios-table tbody');
-                    data.forEach(usuario => {
-                        const tr = document.createElement('tr');
 
-                        tr.innerHTML = `
-                            <td>${usuario.Usuario_id}</td>
-                            <td>${usuario.Nombre}</td>
-                            <td>${usuario.Apellido}</td>
-                            <td>${usuario.Correo}</td>
-                            <td>${usuario.Permisos}</td>
-                            <td>${usuario.Telefono}</td>
-                            <td>${usuario.Edad}</td>
-                            <td>
-                                <button onclick="modificarPermiso(${usuario.Usuario_id})">Modificar Permiso</button>
-                                <button onclick="borrarUsuario(${usuario.Usuario_id})">Borrar</button>
-                            </td>
-                        `;
-
-                        tbody.appendChild(tr);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error al obtener los datos:', error);
-                });
-        });
-
-        // Función para modificar permisos
-        function modificarPermiso(userId) {
-            const nuevoPermiso = prompt('Ingrese el nuevo permiso:');
-            if (nuevoPermiso) {
-                fetch(`/api/usuarios/${userId}/modificar-permiso`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ permiso: nuevoPermiso })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Permiso actualizado exitosamente');
-                    location.reload(); // Recargar la página para ver los cambios
-                })
-                .catch(error => {
-                    console.error('Error al modificar el permiso:', error);
-                });
-            }
-        }
-
-        // Función para borrar usuario
-        function borrarUsuario(userId) {
-            if (confirm('¿Estás seguro de que deseas borrar este usuario?')) {
-                fetch(`/api/usuarios/${userId}`, {
-                    method: 'DELETE'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Usuario borrado exitosamente');
-                    location.reload(); // Recargar la página para ver los cambios
-                })
-                .catch(error => {
-                    console.error('Error al borrar el usuario:', error);
-                });
-            }
-        }
-    </script>
 </body>
 </html>
