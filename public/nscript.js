@@ -2,23 +2,27 @@
 document.getElementById('uploadnoticia').addEventListener('click', subirNoticia);
 
 async function subirNoticia() {
-    const titulo = document.getElementById('titulo').value;
-    const descripcion = document.getElementById('descripcion').value;
-    const link = document.getElementById('filelink').value;
-    const isVideo = document.getElementById('isVideo').checked;  // Cambiado para asegurarnos de obtener el booleano
+    const titulo = document.getElementById('titulo').value.trim();  // trim para evitar espacios
+    const descripcion = document.getElementById('descripcion').value.trim();
+    const link = document.getElementById('filelink').value.trim();
+    const isVideo = document.getElementById('isVideo').checked;  // true si está marcado, false si no
+
+    // URL del API
     const url = `https://ndba.onrender.com/noticias`;
 
-    const s = {
+    // Validación simple
+    if (titulo === '' || descripcion === '' || link === '') {
+        alert('Por favor, llena todos los campos');
+        return;
+    }
+
+    // Crear objeto de noticia
+    const nuevaNoticia = {
         "Nombre": titulo,
         "Descripcion": descripcion,
         "Link": link,
         "IsVideo": isVideo
     };
-
-    if (titulo == '' || descripcion == '' || link == '') {
-        alert('Por favor, llena todos los campos');
-        return;
-    }
 
     try {
         const response = await fetch(url, {
@@ -26,7 +30,7 @@ async function subirNoticia() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(s)
+            body: JSON.stringify(nuevaNoticia)
         });
 
         if (!response.ok) {
@@ -36,11 +40,12 @@ async function subirNoticia() {
         const data = await response.json();
         console.log('Noticia subida correctamente:', data);
         alert('Noticia subida correctamente');
+        cargarNoticias();  // Actualizar la lista de noticias después de subir una nueva
+
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error al subir la noticia:', error);
         alert('Hubo un problema al subir la noticia');
     }
-
 }
 
 // Función para eliminar noticias
