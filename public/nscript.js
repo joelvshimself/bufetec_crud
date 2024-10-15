@@ -5,12 +5,14 @@ async function subirNoticia() {
     const titulo = document.getElementById('titulo').value;
     const descripcion = document.getElementById('descripcion').value;
     const link = document.getElementById('filelink').value;
+    const isVideo = document.getElementById('isVideo').checked;
     const url = `https://ndba.onrender.com/noticias`;
 
     const s = {
         "Nombre": titulo,
         "Descripcion": descripcion,
-        "Link": link
+        "Link": link,
+        "IsVideo": isVideo
     };
 
     if (titulo == '' || descripcion == '' || link == '') {
