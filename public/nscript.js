@@ -5,7 +5,7 @@ async function subirNoticia() {
     const titulo = document.getElementById('titulo').value;
     const descripcion = document.getElementById('descripcion').value;
     const link = document.getElementById('filelink').value;
-    const isVideo = document.getElementById('isVideo').checked;
+    const isVideo = document.getElementById('isVideo').checked;  // Cambiado para asegurarnos de obtener el booleano
     const url = `https://ndba.onrender.com/noticias`;
 
     const s = {
@@ -19,6 +19,7 @@ async function subirNoticia() {
         alert('Por favor, llena todos los campos');
         return;
     }
+
     try {
         const response = await fetch(url, {
             method: 'POST',
